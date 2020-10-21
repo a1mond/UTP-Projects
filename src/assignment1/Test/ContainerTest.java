@@ -20,11 +20,15 @@ public class ContainerTest {
         book1 = new Book(1996);
         book2 = new Book(2005);
 
-        this.container.add(book1);
-        this.container.add(book2);
-
         this.list.add(book1);
         this.list.add(book2);
+    }
+
+    @Test
+    public void aggregateAllElements() {
+        Integer containerAgg = container.aggregateAllElements();
+        Integer basicAgg = book1.aggregate(book2.aggregate(null));
+        Assert.assertEquals(containerAgg, basicAgg);
     }
 
     @Test
@@ -38,13 +42,8 @@ public class ContainerTest {
 
     @Test
     public void elements() {
-        LinkedList<Book> testlist = new LinkedList<>();
-        testlist.add(book1);
-        testlist.add(book2);
-
-        Assert.assertEquals(testlist.get(0).getDateOfIssue(), this.container.elements().get(0).getDateOfIssue());
-        //System.out.println(testlist.get(0).getDateOfIssue() + "   " + this.container.elements().get(0).getDateOfIssue());
-        Assert.assertEquals(testlist.get(1).getDateOfIssue(), this.container.elements().get(1).getDateOfIssue());
-        //System.out.println(testlist.get(1).getDateOfIssue() + "   " + this.container.elements().get(1).getDateOfIssue());
+        Assert.assertEquals(list.get(0).getDateOfIssue(), this.container.elements().get(0).getDateOfIssue());
+        Assert.assertEquals(list.get(1).getDateOfIssue(), this.container.elements().get(1).getDateOfIssue());
+        Assert.assertSame(list.get(0), this.container.elements().get(0));
     }
 }

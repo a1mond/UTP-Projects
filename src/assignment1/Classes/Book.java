@@ -15,8 +15,10 @@ public class Book implements IAggregable<Book, Integer>, IDeeplyCloneable<Book> 
     }
 
     @Override
-    public Integer aggregate(Integer result) throws NullPointerException {
-        return dateOfIssue + result;
+    public Integer aggregate(Integer i) {
+        if (i == null)
+            return dateOfIssue;
+        return dateOfIssue + i;
     }
 
     @Override

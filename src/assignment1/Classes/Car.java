@@ -16,7 +16,9 @@ public class Car implements IAggregable<Car, String>, IDeeplyCloneable<Car> {
     }
 
     @Override
-    public String aggregate(String result) throws NullPointerException {
+    public String aggregate(String s) {
+        if (s == null)
+            return model;
         return model.concat(" ").concat(model);
     }
 }

@@ -24,7 +24,7 @@ public class Container<T extends IAggregable<T, R> & IDeeplyCloneable<T>, R> imp
     }
 
     @Override
-    public R aggregateAll() {
+    public R aggregateAllElements() {
         R aggregate = null;
         for (T t : this.elements)
             aggregate = t.aggregate(aggregate);
