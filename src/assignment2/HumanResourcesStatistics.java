@@ -6,21 +6,69 @@ import java.util.stream.Collectors;
 
 import assignment2.Employees.Employee;
 import assignment2.Employees.Manager;
+import assignment2.Employees.Worker;
 import assignment2.Payroll.PayrollEntry;
 
 public final class HumanResourcesStatistics {
 
 	public static List<PayrollEntry> payroll(List<Employee> employees) {
-		return null;
+		if (employees == null)
+			return null;
+		List<PayrollEntry> payrolls = employees
+				.stream()
+				.map(e -> {
+//					if (e.getClass().toString().split(" ")[1].equals("Trainee"))
+//						return new PayrollEntry(e, e.getSalary(), new BigDecimal(0));
+//					else
+//						return new PayrollEntry(e, e.getSalary(), ((Worker) e).getBonus());
+					try {
+						return new PayrollEntry(e, e.getSalary(), ((Worker) e).getBonus());
+					} catch (ClassCastException ignore) {
+						return new PayrollEntry(e, e.getSalary(), new BigDecimal(0));
+					}
+				})
+				.collect(Collectors.toList());
+		return payrolls;
 	}
 
 	// payroll for all subordinates
 	public static List<PayrollEntry> subordinatesPayroll(Manager manager) {
-		return null;
+		if (manager == null)
+			return null;
+		List<PayrollEntry> payrolls = manager
+				.getAllSubordinates()
+				.stream()
+				.map(e -> {
+//					if (e.getClass().toString().split(" ")[1].equals("Trainee"))
+//						return new PayrollEntry(e, e.getSalary(), new BigDecimal(0));
+//					else
+//						return new PayrollEntry(e, e.getSalary(), ((Worker) e).getBonus());
+					try {
+						return new PayrollEntry(e, e.getSalary(), ((Worker) e).getBonus());
+					} catch (ClassCastException ignore) {
+						return new PayrollEntry(e, e.getSalary(), new BigDecimal(0));
+					}
+				})
+				.collect(Collectors.toList());
+		return payrolls;
 	}
 
 	public static BigDecimal bonusTotal(List<Employee> employees) {
-		return null;
+		if (employees == null)
+			return null;
+		BigDecimal total = employees
+				.stream()
+				.map(e -> {
+					try {
+						return ((Worker) e).getBonus();
+					} catch (ClassCastException ignore) {
+						return new BigDecimal(0);
+					}
+				})
+				.collect(Collectors.toList())
+				.stream()
+				.reduce(new BigDecimal(0), BigDecimal::add);
+		return total;
 	}
 
 	/// ...

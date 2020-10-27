@@ -23,7 +23,7 @@ public abstract class Person {
 						 _lastName;
 	private final LocalDate _birthDate;
 
-	protected Person(String firstName, String lastName, LocalDate birthDate) {
+	public Person(String firstName, String lastName, LocalDate birthDate) {
 		_firstName = firstName;
 		_lastName = lastName;
 		_birthDate = birthDate;

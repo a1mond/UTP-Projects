@@ -18,4 +18,8 @@ public abstract class Employee extends Person {
 		_salary = salary;
 		_manager = manager;
 	}
+
+	public BigDecimal getSalary() {
+		return _salary;
+	}
 }
