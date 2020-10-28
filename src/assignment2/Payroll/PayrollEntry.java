@@ -13,4 +13,9 @@ public final class PayrollEntry {
 		_employee = employee;
 		_salaryPlusBonus = salary.add(bonus); // validate whether salary and bonus are not null
 	}
+
+	@Override
+	public String toString() {
+		return _employee.getFirstName() + " " + _salaryPlusBonus;
+	}
 }

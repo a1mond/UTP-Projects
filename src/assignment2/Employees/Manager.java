@@ -17,19 +17,16 @@ public final class Manager extends Worker {
 		_subordinates = subordinates;
 	}
 
-	public LinkedList<Employee> getSubordinates() {
-		return _subordinates;
+	public void setSubordinates(LinkedList<Employee> _subordinates) {
+		this._subordinates = _subordinates;
 	}
 
 	public LinkedList<Employee> getAllSubordinates() {
 		LinkedList<Employee> list = new LinkedList<>();
 		for (Employee e : _subordinates) {
-			if (e.getClass().toString().split(" ")[1].equals("Manager")) {
-				list.add(e);
-				Manager tmp = (Manager) e;
-				tmp.getAllSubordinates();
-			} else
-				list.add(e);
+			if (e.getClass() == Manager.class)
+				((Manager) e).getAllSubordinates();
+			list.add(e);
 		}
 		return list;
 	}

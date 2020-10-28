@@ -5,7 +5,6 @@ import assignment2.Employees.Manager;
 import assignment2.Employees.Trainee;
 import assignment2.Employees.Worker;
 import assignment2.HumanResourcesStatistics;
-import assignment2.Payroll.PayrollEntry;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -46,12 +45,16 @@ public class HumanResourcesStatisticsTest {
 
     @Test
     public void payroll() {
-        HumanResourcesStatistics.payroll(_allEmployees);
+        System.out.println("Payroll test: ");
+        HumanResourcesStatistics.payroll(_allEmployees).forEach(p -> System.out.println(" - " + p.toString()));
+        System.out.println();
     }
 
     @Test
     public void subordinatesPayroll() {
-        HumanResourcesStatistics.subordinatesPayroll(null);
+        System.out.println("Sub payroll test: ");
+        HumanResourcesStatistics.subordinatesPayroll(m2).forEach(s -> System.out.println(" - " + s.toString()));
+        System.out.println();
     }
 
     @Test
@@ -135,6 +138,7 @@ public class HumanResourcesStatisticsTest {
         d1sub.add(m1);
         d1sub.add(m2);
         d1sub.add(m3);
+        d1.setSubordinates(d1sub);
 
         m1sub = new LinkedList<>();
         m1sub.add(w1);
@@ -143,6 +147,7 @@ public class HumanResourcesStatisticsTest {
         m1sub.add(t1);
         m1sub.add(t2);
         m1sub.add(t4);
+        m1.setSubordinates(m1sub);
 
         m2sub = new LinkedList<>();
         m2sub.add(w2);
@@ -151,12 +156,15 @@ public class HumanResourcesStatisticsTest {
         m2sub.add(w9);
         m2sub.add(t5);
         m2sub.add(t6);
+        m2.setSubordinates(m2sub);
 
         m3sub = new LinkedList<>();
         m3sub.add(w4);
         m3sub.add(w5);
         m3sub.add(w10);
         m3sub.add(t3);
+        m3.setSubordinates(m3sub);
+
 
         _allEmployees = new LinkedList<>();
         _allEmployees.add(d1);
@@ -166,5 +174,6 @@ public class HumanResourcesStatisticsTest {
         _allEmployees.addAll(m1sub);
         _allEmployees.addAll(m2sub);
         _allEmployees.addAll(m3sub);
+
     }
 }

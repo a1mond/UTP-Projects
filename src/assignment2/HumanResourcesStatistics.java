@@ -1,9 +1,6 @@
 package assignment2;
 
-import assignment2.Employees.Employee;
-import assignment2.Employees.Manager;
-import assignment2.Employees.Trainee;
-import assignment2.Employees.Worker;
+import assignment2.Employees.*;
 import assignment2.Payroll.PayrollEntry;
 
 import java.math.BigDecimal;
@@ -18,13 +15,7 @@ public final class HumanResourcesStatistics {
 			return null;
 		return employees
 				.stream()
-				.map(e -> {
-					try {
-						return new PayrollEntry(e, e.getSalary(), ((Worker) e).getBonus());
-					} catch (ClassCastException ignore) {
-						return new PayrollEntry(e, e.getSalary(), new BigDecimal(0));
-					}
-				})
+				.map(e -> new PayrollEntry(e, e.getSalary(), e.getClass() == Trainee.class ? BigDecimal.ZERO : ((Worker) e).getBonus()))
 				.collect(Collectors.toList());
 	}
 
@@ -35,17 +26,7 @@ public final class HumanResourcesStatistics {
 		return manager
 				.getAllSubordinates()
 				.stream()
-				.map(e -> {
-//					if (e.getClass().toString().split(" ")[1].equals("Trainee"))
-//						return new PayrollEntry(e, e.getSalary(), new BigDecimal(0));
-//					else
-//						return new PayrollEntry(e, e.getSalary(), ((Worker) e).getBonus());
-					try {
-						return new PayrollEntry(e, e.getSalary(), ((Worker) e).getBonus());
-					} catch (ClassCastException ignore) {
-						return new PayrollEntry(e, e.getSalary(), new BigDecimal(0));
-					}
-				})
+				.map(e -> new PayrollEntry(e, e.getSalary(), e.getClass() == Trainee.class ? BigDecimal.ZERO : ((Worker) e).getBonus()))
 				.collect(Collectors.toList());
 	}
 
@@ -54,16 +35,8 @@ public final class HumanResourcesStatistics {
 			return null;
 		return employees
 				.stream()
-				.map(e -> {
-					try {
-						return ((Worker) e).getBonus();
-					} catch (ClassCastException ignore) {
-						return new BigDecimal(0);
-					}
-				})
-				.collect(Collectors.toList())
-				.stream()
-				.reduce(new BigDecimal(0), BigDecimal::add);
+				.map(e -> e.getClass() == Trainee.class ? BigDecimal.ZERO : ((Worker) e).getBonus())
+				.reduce(BigDecimal.ZERO, BigDecimal::add);
 	}
 	public static Employee getLongestSeniorityEmployee(List<Employee> employees) {
 		if (employees == null)
@@ -150,7 +123,7 @@ public final class HumanResourcesStatistics {
 				.filter(emp -> emp.getFirstName().startsWith("A") && emp.getAge() > 20) //
 				.map(emp -> (int) emp.getAge()) //
 				.reduce(0, //
-						(total, age) -> total + age);
+						Integer::sum);
 
 		long filteredEmployeesCount = employees //
 				.stream() //
@@ -174,7 +147,7 @@ public final class HumanResourcesStatistics {
 	public static short getMaxAgeInline(List<Employee> employees) {
 		short employeeMaxAge = employees //
 				.stream() //
-				.map(emp -> emp.getAge()) //
+				.map(Person::getAge) //
 				.reduce((short) 0, //
 						(maxAge, age) -> {
 							if (maxAge < age) {
