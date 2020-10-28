@@ -14,10 +14,6 @@ public class Container<T extends IAggregable<T, R> & IDeeplyCloneable<T>, R> imp
         this.elements = t;
     }
 
-    public void add(T t) {
-        this.elements.add(t);
-    }
-
     @Override
     public List<T> elements() {
         return this.elements;
@@ -32,9 +28,9 @@ public class Container<T extends IAggregable<T, R> & IDeeplyCloneable<T>, R> imp
     }
 
     @Override
-    public T cloneElementAtIndex(int index) throws IndexOutOfBoundsException {
+    public T cloneElementAtIndex(int index) {
         if (index > this.elements.size() || index < 0)
-            throw new IndexOutOfBoundsException();
+            return null;
         return this.elements.get(index).deepClone();
     }
 }

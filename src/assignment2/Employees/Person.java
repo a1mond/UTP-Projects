@@ -32,7 +32,11 @@ public abstract class Person {
 	public String getFirstName() { // getter
 		return _firstName;
 	}
-	
+
+	public String getLastName() {
+		return _lastName;
+	}
+
 	public short getAge() {
 		// TO BE IMPLEMENTED CORRECTLY
 		return (short)(LocalDate.now().getYear() - _birthDate.getYear());

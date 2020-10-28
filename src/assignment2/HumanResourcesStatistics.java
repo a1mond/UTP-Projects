@@ -1,26 +1,24 @@
 package assignment2;
 
-import java.math.BigDecimal;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import assignment2.Employees.Employee;
 import assignment2.Employees.Manager;
+import assignment2.Employees.Trainee;
 import assignment2.Employees.Worker;
 import assignment2.Payroll.PayrollEntry;
+
+import java.math.BigDecimal;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public final class HumanResourcesStatistics {
 
 	public static List<PayrollEntry> payroll(List<Employee> employees) {
 		if (employees == null)
 			return null;
-		List<PayrollEntry> payrolls = employees
+		return employees
 				.stream()
 				.map(e -> {
-//					if (e.getClass().toString().split(" ")[1].equals("Trainee"))
-//						return new PayrollEntry(e, e.getSalary(), new BigDecimal(0));
-//					else
-//						return new PayrollEntry(e, e.getSalary(), ((Worker) e).getBonus());
 					try {
 						return new PayrollEntry(e, e.getSalary(), ((Worker) e).getBonus());
 					} catch (ClassCastException ignore) {
@@ -28,14 +26,13 @@ public final class HumanResourcesStatistics {
 					}
 				})
 				.collect(Collectors.toList());
-		return payrolls;
 	}
 
 	// payroll for all subordinates
 	public static List<PayrollEntry> subordinatesPayroll(Manager manager) {
 		if (manager == null)
 			return null;
-		List<PayrollEntry> payrolls = manager
+		return manager
 				.getAllSubordinates()
 				.stream()
 				.map(e -> {
@@ -50,13 +47,12 @@ public final class HumanResourcesStatistics {
 					}
 				})
 				.collect(Collectors.toList());
-		return payrolls;
 	}
 
 	public static BigDecimal bonusTotal(List<Employee> employees) {
 		if (employees == null)
 			return null;
-		BigDecimal total = employees
+		return employees
 				.stream()
 				.map(e -> {
 					try {
@@ -68,7 +64,50 @@ public final class HumanResourcesStatistics {
 				.collect(Collectors.toList())
 				.stream()
 				.reduce(new BigDecimal(0), BigDecimal::add);
-		return total;
+	}
+	public static Employee getLongestSeniorityEmployee(List<Employee> employees) {
+		if (employees == null)
+			return null;
+		return employees
+				.stream()
+				.filter(employee -> employee.getClass() != Trainee.class)
+				.sorted(Comparator.comparing(e -> ((Worker) e).getEmploymentDate()))
+				.collect(Collectors.toList())
+				.get(0);
+	}
+	public static BigDecimal getHighestSalary(List<Employee> employees) {
+		if (employees == null)
+			return null;
+		return employees
+				.stream()
+				.map(Employee::getSalary)
+				.collect(Collectors.toList())
+				.get(0);
+	}
+	public static BigDecimal getHighestSalaryWithBonus(List<Employee> employees) {
+		if (employees == null)
+			return null;
+		return employees
+				.stream()
+				.map(e -> e.getClass() == Trainee.class ? e.getSalary() : e.getSalary().add(((Worker) e).getBonus()))
+				.collect(Collectors.toList())
+				.get(0);
+	}
+	public static List<Employee> getSurnameBeginWithA(List<Employee> employees) {
+		if (employees == null)
+			return null;
+		return employees
+				.stream()
+				.filter(e -> e.getLastName().startsWith("A"))
+				.collect(Collectors.toList());
+	}
+	public static List<Employee> moreThan1000(List<Employee> employees) {
+		if (employees == null)
+			return null;
+		return employees
+				.stream()
+				.filter(e -> e.getSalary().intValue() > 1000)
+				.collect(Collectors.toList());
 	}
 
 	/// ...

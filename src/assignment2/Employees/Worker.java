@@ -21,4 +21,8 @@ public class Worker extends Employee {
 	public BigDecimal getBonus() {
 		return _bonus;
 	}
+
+	public LocalDate getEmploymentDate() {
+		return _employmentDate;
+	}
 }

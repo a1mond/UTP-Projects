@@ -5,6 +5,7 @@ import assignment2.Employees.Manager;
 import assignment2.Employees.Trainee;
 import assignment2.Employees.Worker;
 import assignment2.HumanResourcesStatistics;
+import assignment2.Payroll.PayrollEntry;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,7 +26,6 @@ public class HumanResourcesStatisticsTest {
     private LinkedList<Employee> m1sub;
     private LinkedList<Employee> m2sub;
     private LinkedList<Employee> m3sub;
-
 
     // Create a HR structure which resembles the below one:
     //
@@ -57,7 +57,31 @@ public class HumanResourcesStatisticsTest {
     @Test
     public void bonusTotal() {
         BigDecimal total = HumanResourcesStatistics.bonusTotal(_allEmployees);
-        Assert.assertEquals(new BigDecimal("14844"), total);
+        Assert.assertEquals(new BigDecimal(14844), total);
+    }
+    @Test
+    public void getLongestSeniorityEmployee() {
+        Assert.assertEquals(d1, HumanResourcesStatistics.getLongestSeniorityEmployee(_allEmployees));
+    }
+    @Test
+    public void getHighestSalary() {
+        Assert.assertEquals(BigDecimal.valueOf(20000),
+                HumanResourcesStatistics.getHighestSalary(_allEmployees));
+    }
+    @Test
+    public void getHighestSalaryWithBonus() {
+        Assert.assertEquals(BigDecimal.valueOf(30000),
+                HumanResourcesStatistics.getHighestSalaryWithBonus(_allEmployees));
+    }
+    @Test
+    public void getSurnameBeginWithA() {
+        Assert.assertEquals(List.of(w6),
+                HumanResourcesStatistics.getSurnameBeginWithA(_allEmployees));
+    }
+    @Test
+    public void moreThan1000() {
+        Assert.assertEquals(_allEmployees,
+                HumanResourcesStatistics.moreThan1000(_allEmployees));
     }
 
     @SuppressWarnings("Duplicates")
