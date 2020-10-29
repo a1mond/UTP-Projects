@@ -64,7 +64,7 @@ public class HumanResourcesStatisticsTest {
     }
     @Test
     public void getLongestSeniorityEmployee() {
-        Assert.assertEquals(d1, HumanResourcesStatistics.getLongestSeniorityEmployee(_allEmployees));
+        Assert.assertEquals(d1, HumanResourcesStatistics.   getLongestSeniorityEmployee(_allEmployees));
     }
     @Test
     public void getHighestSalary() {

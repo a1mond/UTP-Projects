@@ -43,7 +43,12 @@ public final class HumanResourcesStatistics {
 			return null;
 		return employees
 				.stream()
-				.filter(employee -> employee.getClass() != Trainee.class)
+				.filter(e -> {
+					if (e.getClass() == Trainee.class)
+						return false;
+					else
+						return true;
+				})
 				.sorted(Comparator.comparing(e -> ((Worker) e).getEmploymentDate()))
 				.collect(Collectors.toList())
 				.get(0);
@@ -54,8 +59,9 @@ public final class HumanResourcesStatistics {
 		return employees
 				.stream()
 				.map(Employee::getSalary)
+				.sorted()
 				.collect(Collectors.toList())
-				.get(0);
+				.get(employees.size() - 1);
 	}
 	public static BigDecimal getHighestSalaryWithBonus(List<Employee> employees) {
 		if (employees == null)
@@ -63,8 +69,9 @@ public final class HumanResourcesStatistics {
 		return employees
 				.stream()
 				.map(e -> e.getClass() == Trainee.class ? e.getSalary() : e.getSalary().add(((Worker) e).getBonus()))
+				.sorted()
 				.collect(Collectors.toList())
-				.get(0);
+				.get(employees.size() - 1);
 	}
 	public static List<Employee> getSurnameBeginWithA(List<Employee> employees) {
 		if (employees == null)
