@@ -1,4 +1,3 @@
-package assignment2.Test;
 
 import assignment2.Employees.Employee;
 import assignment2.Employees.Manager;
