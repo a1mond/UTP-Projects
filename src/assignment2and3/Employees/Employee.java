@@ -22,4 +22,8 @@ public abstract class Employee extends Person {
 	public BigDecimal getSalary() {
 		return _salary;
 	}
+
+	public Manager getManager() {
+		return _manager;
+	}
 }
