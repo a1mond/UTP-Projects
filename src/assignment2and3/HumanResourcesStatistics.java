@@ -1,7 +1,7 @@
-package assignment2;
+package assignment2and3;
 
-import assignment2.Employees.*;
-import assignment2.Payroll.PayrollEntry;
+import assignment2and3.Employees.*;
+import assignment2and3.Payroll.PayrollEntry;
 
 import java.math.BigDecimal;
 import java.util.Comparator;
@@ -90,6 +90,26 @@ public final class HumanResourcesStatistics {
 				.collect(Collectors.toList());
 	}
 
+
+
+	public static List<Employee> olderThanAndEarnMore(List<Employee> allEmployees, Employee employee) {
+		return null;
+	}
+	public static List<Trainee> practiceLengthLongerThan(List<Employee> allEmployees, int daysCount) {
+		return null;
+	}
+	public static List<Worker> seniorityLongerThan(List<Employee> allEmployees, int monthCount) {
+		return null;
+	}
+	public static List<Worker> seniorityBetweenOneAndThreeYears(List<Employee> allEmployees) {
+		return null;
+	}
+	public static List<Worker> seniorityLongerThan(List<Employee> allEmployees, Employee employee) {
+		return null;
+	}
+	public static List<Worker> seniorityBetweenTwoAndFourYearsAndAgeGreaterThan(List<Employee> allEmployees, int age) {
+		return null;
+	}
 	/// ...
 	// rest of the methods specified in the assignment description
 	

@@ -1,8 +1,8 @@
-package assignment2.Payroll;
+package assignment2and3.Payroll;
 
 import java.math.BigDecimal;
 
-import assignment2.Employees.Employee;
+import assignment2and3.Employees.Employee;
 
 public final class PayrollEntry {
 

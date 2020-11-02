@@ -1,10 +1,8 @@
-package assignment2.Test;
-
-import assignment2.Employees.Employee;
-import assignment2.Employees.Manager;
-import assignment2.Employees.Trainee;
-import assignment2.Employees.Worker;
-import assignment2.HumanResourcesStatistics;
+import assignment2and3.Employees.Employee;
+import assignment2and3.Employees.Manager;
+import assignment2and3.Employees.Trainee;
+import assignment2and3.Employees.Worker;
+import assignment2and3.HumanResourcesStatistics;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
