@@ -9,13 +9,16 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public final class HumanResourcesStatistics {
+	public static BigDecimal traineeCheck(Employee e) {
+		return e instanceof Trainee ? BigDecimal.ZERO : ((Worker) e).getBonus();
+	}
 
 	public static List<PayrollEntry> payroll(List<Employee> employees) {
 		if (employees == null)
 			return null;
 		return employees
 				.stream()
-				.map(e -> new PayrollEntry(e, e.getSalary(), e.getClass() == Trainee.class ? BigDecimal.ZERO : ((Worker) e).getBonus()))
+				.map(e -> new PayrollEntry(e, e.getSalary(), traineeCheck(e)))
 				.collect(Collectors.toList());
 	}
 
@@ -26,7 +29,7 @@ public final class HumanResourcesStatistics {
 		return manager
 				.getAllSubordinates()
 				.stream()
-				.map(e -> new PayrollEntry(e, e.getSalary(), e.getClass() == Trainee.class ? BigDecimal.ZERO : ((Worker) e).getBonus()))
+				.map(e -> new PayrollEntry(e, e.getSalary(), traineeCheck(e)))
 				.collect(Collectors.toList());
 	}
 
@@ -35,7 +38,7 @@ public final class HumanResourcesStatistics {
 			return null;
 		return employees
 				.stream()
-				.map(e -> e.getClass() == Trainee.class ? BigDecimal.ZERO : ((Worker) e).getBonus())
+				.map(HumanResourcesStatistics::traineeCheck)
 				.reduce(BigDecimal.ZERO, BigDecimal::add);
 	}
 	public static Employee getLongestSeniorityEmployee(List<Employee> employees) {
@@ -43,13 +46,9 @@ public final class HumanResourcesStatistics {
 			return null;
 		return employees
 				.stream()
-				.filter(e -> {
-					if (e.getClass() == Trainee.class)
-						return false;
-					else
-						return true;
-				})
-				.sorted(Comparator.comparing(e -> ((Worker) e).getEmploymentDate()))
+				.filter(e -> e instanceof Worker)
+				.map(e -> (Worker)e)
+				.sorted(Comparator.comparing(Worker::getEmploymentDate))
 				.collect(Collectors.toList())
 				.get(0);
 	}
@@ -68,7 +67,7 @@ public final class HumanResourcesStatistics {
 			return null;
 		return employees
 				.stream()
-				.map(e -> e.getClass() == Trainee.class ? e.getSalary() : e.getSalary().add(((Worker) e).getBonus()))
+				.map(e -> e instanceof Trainee ? e.getSalary() : e.getSalary().add(((Worker) e).getBonus()))
 				.sorted()
 				.collect(Collectors.toList())
 				.get(employees.size() - 1);
@@ -172,18 +171,12 @@ public final class HumanResourcesStatistics {
 	}
 
 	public static short getMaxAgeInline(List<Employee> employees) {
-		short employeeMaxAge = employees //
+		return (short) employees //
 				.stream() //
-				.map(Person::getAge) //
-				.reduce((short) 0, //
-						(maxAge, age) -> {
-							if (maxAge < age) {
-								return age;
-							} else {
-								return maxAge;
-							}
-						});
-		return employeeMaxAge;
+				.map(Person::getAge)
+				.mapToInt(value -> (int)value)
+				.max()
+				.getAsInt();
 	}
 
 	public static short getMaxAgeMethodReference(List<Employee> employees) {

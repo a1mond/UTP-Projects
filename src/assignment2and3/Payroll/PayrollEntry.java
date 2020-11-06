@@ -1,8 +1,8 @@
 package assignment2and3.Payroll;
 
-import java.math.BigDecimal;
-
 import assignment2and3.Employees.Employee;
+
+import java.math.BigDecimal;
 
 public final class PayrollEntry {
 
@@ -18,4 +18,5 @@ public final class PayrollEntry {
 	public String toString() {
 		return _employee.getFirstName() + " " + _salaryPlusBonus;
 	}
+
 }
