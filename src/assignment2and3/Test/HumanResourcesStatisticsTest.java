@@ -42,24 +42,11 @@ public class HumanResourcesStatisticsTest {
     private List<Employee> _allEmployees; // all employees ---  i.e. Workers, Trainees and their Managers and top Director (also an instance of Manager class)
 
     @Test
-    public void payroll() {
-        System.out.println("Payroll test: ");
-        HumanResourcesStatistics.payroll(_allEmployees).forEach(p -> System.out.println(" - " + p.toString()));
-        System.out.println();
-    }
-
-    @Test
-    public void subordinatesPayroll() {
-        System.out.println("Sub payroll test: ");
-        HumanResourcesStatistics.subordinatesPayroll(m2).forEach(s -> System.out.println(" - " + s.toString()));
-        System.out.println();
-    }
-
-    @Test
     public void bonusTotal() {
         BigDecimal total = HumanResourcesStatistics.bonusTotal(_allEmployees);
         Assert.assertEquals(new BigDecimal(14844), total);
     }
+
     @Test
     public void getLongestSeniorityEmployee() {
         Assert.assertEquals(d1, HumanResourcesStatistics.   getLongestSeniorityEmployee(_allEmployees));
@@ -83,6 +70,15 @@ public class HumanResourcesStatisticsTest {
     public void moreThan1000() {
         Assert.assertEquals(_allEmployees,
                 HumanResourcesStatistics.moreThan1000(_allEmployees));
+    }
+    @Test
+    public void payroll() {
+        HumanResourcesStatistics.payroll(_allEmployees);
+    }
+
+    @Test
+    public void subordinatesPayroll() {
+        HumanResourcesStatistics.subordinatesPayroll(m2);
     }
 
     @SuppressWarnings("Duplicates")
