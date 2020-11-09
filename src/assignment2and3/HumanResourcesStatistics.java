@@ -18,6 +18,19 @@ public final class HumanResourcesStatistics {
 	private static final Function<Employee, Worker> castToWorker = e -> (Worker) e;
 	private static final Function<Employee, Trainee> castToTrainee = e -> (Trainee) e;
 
+	private static Stream<Trainee> streamTraineeCaster(List<Employee> list) {
+		return list
+				.stream()
+				.filter(isTrainee)
+				.map(castToTrainee);
+	}
+	private static Stream<Worker> streamWorkerCaster(List<Employee> list) {
+		return list
+				.stream()
+				.filter(isWorker)
+				.map(castToWorker);
+	}
+
 	public static BigDecimal traineeCheckForBonus(Employee e) {
 		return e instanceof Trainee ? BigDecimal.ZERO : ((Worker) e).getBonus();
 	}
@@ -118,10 +131,7 @@ public final class HumanResourcesStatistics {
 	public static List<Trainee> practiceLengthLongerThan(List<Employee> allEmployees, int daysCount) {
 		if (allEmployees == null || daysCount < 0)
 			return null;
-		return allEmployees
-				.stream()
-				.filter(isTrainee)
-				.map(castToTrainee)
+		return streamTraineeCaster(allEmployees)
 				.filter(e -> e.isAppLonger(daysCount))
 				.collect(Collectors.toList());
 	}
@@ -129,30 +139,21 @@ public final class HumanResourcesStatistics {
 	public static List<Worker> seniorityLongerThan(List<Employee> allEmployees, int monthCount) {
 		if (allEmployees == null || monthCount < 0)
 			return null;
-		return allEmployees
-				.stream()
-				.filter(isWorker)
-				.map(castToWorker)
+		return streamWorkerCaster(allEmployees)
 				.filter(e -> e.isSenGreaterByMonth(monthCount))
 				.collect(Collectors.toList());
 	}
 	public static List<Worker> seniorityBetweenOneAndThreeYears(List<Employee> allEmployees) {
 		if (allEmployees == null)
 			return null;
-		return allEmployees
-				.stream()
-				.filter(isWorker)
-				.map(castToWorker)
+		return streamWorkerCaster(allEmployees)
 				.filter(e -> e.isSenGreaterByYear(1) && e.isSenGreaterByYear(3))
 				.collect(Collectors.toList());
 	}
 	public static List<Worker> seniorityLongerThan(List<Employee> allEmployees, Employee employee) {
 		if (allEmployees == null || employee == null)
 			return null;
-		return allEmployees
-				.stream()
-				.filter(isWorker)
-				.map(castToWorker)
+		return streamWorkerCaster(allEmployees)
 				.filter(e -> e.isSenGreaterByMonth(e.getMonthOfSen()))
 				.peek(e -> e.setSalary(employee.getSalary()))
 				.collect(Collectors.toList());
@@ -160,10 +161,7 @@ public final class HumanResourcesStatistics {
 	public static List<Worker> seniorityBetweenTwoAndFourYearsAndAgeGreaterThan(List<Employee> allEmployees, int age) {
 		if (allEmployees == null)
 			return null;
-		return allEmployees
-				.stream()
-				.filter(isWorker)
-				.map(castToWorker)
+		return streamWorkerCaster(allEmployees)
 				.filter(e -> e.isSenGreaterByYear(2) && e.isSenGreaterByYear(4) && e.isOlderThan(age))
 				.collect(Collectors.toList());
 
