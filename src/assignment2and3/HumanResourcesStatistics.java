@@ -6,11 +6,23 @@ import assignment2and3.Payroll.PayrollEntry;
 import java.math.BigDecimal;
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public final class HumanResourcesStatistics {
-	public static BigDecimal traineeCheck(Employee e) {
+	private static final Predicate<Employee> isWorker = e -> !traineeCheck(e);
+	private static final Predicate<Employee> isTrainee = HumanResourcesStatistics::traineeCheck;
+
+	private static final Function<Employee, Worker> castToWorker = e -> (Worker) e;
+	private static final Function<Employee, Trainee> castToTrainee = e -> (Trainee) e;
+
+	public static BigDecimal traineeCheckForBonus(Employee e) {
 		return e instanceof Trainee ? BigDecimal.ZERO : ((Worker) e).getBonus();
+	}
+	public static boolean traineeCheck(Employee e) {
+		return e instanceof Trainee;
 	}
 
 	public static List<PayrollEntry> payroll(List<Employee> employees) {
@@ -18,7 +30,7 @@ public final class HumanResourcesStatistics {
 			return null;
 		return employees
 				.stream()
-				.map(e -> new PayrollEntry(e, e.getSalary(), traineeCheck(e)))
+				.map(HumanResourcesStatistics::payrollEntry)
 				.collect(Collectors.toList());
 	}
 
@@ -29,8 +41,12 @@ public final class HumanResourcesStatistics {
 		return manager
 				.getAllSubordinates()
 				.stream()
-				.map(e -> new PayrollEntry(e, e.getSalary(), traineeCheck(e)))
+				.map(HumanResourcesStatistics::payrollEntry)
 				.collect(Collectors.toList());
+	}
+
+	private static PayrollEntry payrollEntry(Employee e) {
+		return new PayrollEntry(e, e.getSalary(), traineeCheckForBonus(e));
 	}
 
 	public static BigDecimal bonusTotal(List<Employee> employees) {
@@ -38,7 +54,7 @@ public final class HumanResourcesStatistics {
 			return null;
 		return employees
 				.stream()
-				.map(HumanResourcesStatistics::traineeCheck)
+				.map(HumanResourcesStatistics::traineeCheckForBonus)
 				.reduce(BigDecimal.ZERO, BigDecimal::add);
 	}
 	public static Employee getLongestSeniorityEmployee(List<Employee> employees) {
@@ -92,22 +108,65 @@ public final class HumanResourcesStatistics {
 
 
 	public static List<Employee> olderThanAndEarnMore(List<Employee> allEmployees, Employee employee) {
-		return null;
+		if (allEmployees == null || employee == null)
+			return null;
+		return allEmployees
+				.stream()
+				.filter(e -> e.isOlderThan(employee) & e.isSalaryGreater(employee.getSalary()))
+				.collect(Collectors.toList());
 	}
 	public static List<Trainee> practiceLengthLongerThan(List<Employee> allEmployees, int daysCount) {
-		return null;
+		if (allEmployees == null || daysCount < 0)
+			return null;
+		return allEmployees
+				.stream()
+				.filter(isTrainee)
+				.map(castToTrainee)
+				.filter(e -> e.isAppLonger(daysCount))
+				.collect(Collectors.toList());
 	}
+
 	public static List<Worker> seniorityLongerThan(List<Employee> allEmployees, int monthCount) {
-		return null;
+		if (allEmployees == null || monthCount < 0)
+			return null;
+		return allEmployees
+				.stream()
+				.filter(isWorker)
+				.map(castToWorker)
+				.filter(e -> e.isSenGreaterByMonth(monthCount))
+				.collect(Collectors.toList());
 	}
 	public static List<Worker> seniorityBetweenOneAndThreeYears(List<Employee> allEmployees) {
-		return null;
+		if (allEmployees == null)
+			return null;
+		return allEmployees
+				.stream()
+				.filter(isWorker)
+				.map(castToWorker)
+				.filter(e -> e.isSenGreaterByYear(1) && e.isSenGreaterByYear(3))
+				.collect(Collectors.toList());
 	}
 	public static List<Worker> seniorityLongerThan(List<Employee> allEmployees, Employee employee) {
-		return null;
+		if (allEmployees == null || employee == null)
+			return null;
+		return allEmployees
+				.stream()
+				.filter(isWorker)
+				.map(castToWorker)
+				.filter(e -> e.isSenGreaterByMonth(e.getMonthOfSen()))
+				.peek(e -> e.setSalary(employee.getSalary()))
+				.collect(Collectors.toList());
 	}
 	public static List<Worker> seniorityBetweenTwoAndFourYearsAndAgeGreaterThan(List<Employee> allEmployees, int age) {
-		return null;
+		if (allEmployees == null)
+			return null;
+		return allEmployees
+				.stream()
+				.filter(isWorker)
+				.map(castToWorker)
+				.filter(e -> e.isSenGreaterByYear(2) && e.isSenGreaterByYear(4) && e.isOlderThan(age))
+				.collect(Collectors.toList());
+
 	}
 	/// ...
 	// rest of the methods specified in the assignment description
@@ -123,7 +182,7 @@ public final class HumanResourcesStatistics {
 		}
 		List<Short> ages = employees //
 				.stream() //
-				.map(emp -> emp.getAge()) //
+				.map(Person::getAge) //
 				.collect(Collectors.toList());
 		return ages;
 	}
@@ -182,7 +241,7 @@ public final class HumanResourcesStatistics {
 	public static short getMaxAgeMethodReference(List<Employee> employees) {
 		short employeeMaxAge = employees //
 				.stream() //
-				.map(emp -> emp.getAge()) //
+				.map(Person::getAge) //
 				.reduce((short) 0, HumanResourcesStatistics::maxAge);
 		return employeeMaxAge;
 	}

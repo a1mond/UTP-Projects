@@ -19,6 +19,20 @@ public abstract class Employee extends Person {
 		_manager = manager;
 	}
 
+	public boolean isSalaryGreater(BigDecimal money) {
+		return _salary.compareTo(money) > 0;
+	}
+	public boolean isSalarySmaller(BigDecimal money) {
+		return _salary.compareTo(money) < 0;
+	}
+	public int compareSalary(BigDecimal money) {
+		return _salary.compareTo(money);
+	}
+
+	public void setSalary(BigDecimal _salary) {
+		this._salary = _salary;
+	}
+
 	public BigDecimal getSalary() {
 		return _salary;
 	}

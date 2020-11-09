@@ -19,4 +19,10 @@ public class Trainee extends Employee {
 		_apprenticeShipStart = apprenticeShipStart;
 		_apprenticeShipLength = apprenticeShipLength;
 	}
+	public boolean isAppLonger(int length) {
+		return _apprenticeShipLength > length;
+	}
+	public boolean isAppShorter(int length) {
+		return _apprenticeShipLength < length;
+	}
 }

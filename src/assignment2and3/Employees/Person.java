@@ -22,13 +22,28 @@ public abstract class Person {
 	private final String _firstName, // backing field
 						 _lastName;
 	private final LocalDate _birthDate;
+	private short _age;
 
 	public Person(String firstName, String lastName, LocalDate birthDate) {
 		_firstName = firstName;
 		_lastName = lastName;
 		_birthDate = birthDate;
+		calcAge();
+	}
+	public boolean isOlderThan(Person person) {
+		return _age > person.getAge();
+	}
+	public boolean isOlderThan(int age) {
+		return _age > age;
 	}
 
+	public boolean isYoungerThan(Person person) {
+		return _age < person.getAge();
+	}
+
+	public boolean compareAge(Person person) {
+		return getAge() > person.getAge();
+	}
 	public String getFirstName() { // getter
 		return _firstName;
 	}
@@ -38,7 +53,12 @@ public abstract class Person {
 	}
 
 	public short getAge() {
+		calcAge();
+		return _age;
+	}
+
+	public void calcAge() {
 		// TO BE IMPLEMENTED CORRECTLY
-		return (short)(LocalDate.now().getYear() - _birthDate.getYear());
+		_age = (short)(LocalDate.now().getYear() - _birthDate.getYear());
 	}
 }
