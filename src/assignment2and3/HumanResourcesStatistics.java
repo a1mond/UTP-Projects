@@ -75,7 +75,7 @@ public final class HumanResourcesStatistics {
 			return null;
 		return employees
 				.stream()
-				.filter(e -> e instanceof Worker)
+				.filter(isWorker)
 				.map(e -> (Worker)e)
 				.sorted(Comparator.comparing(Worker::getEmploymentDate))
 				.collect(Collectors.toList())
@@ -143,26 +143,26 @@ public final class HumanResourcesStatistics {
 				.filter(e -> e.isSenGreaterByMonth(monthCount))
 				.collect(Collectors.toList());
 	}
-	public static List<Worker> seniorityBetweenOneAndThreeYears(List<Employee> allEmployees) {
-		if (allEmployees == null)
-			return null;
-		return streamWorkerCaster(allEmployees)
-				.filter(e -> e.isSenGreaterByYear(1) && e.isSenGreaterByYear(3))
-				.collect(Collectors.toList());
-	}
 	public static List<Worker> seniorityLongerThan(List<Employee> allEmployees, Employee employee) {
 		if (allEmployees == null || employee == null)
 			return null;
 		return streamWorkerCaster(allEmployees)
-				.filter(e -> e.isSenGreaterByMonth(e.getMonthOfSen()))
+				.filter(e -> e.isSenGreaterByMonth(((Worker)employee).getMonthOfSen()))
 				.peek(e -> e.setSalary(employee.getSalary()))
+				.collect(Collectors.toList());
+	}
+	public static List<Worker> seniorityBetweenOneAndThreeYears(List<Employee> allEmployees) {
+		if (allEmployees == null)
+			return null;
+		return streamWorkerCaster(allEmployees)
+				.filter(e -> e.isSenGreaterByYear(1) && !e.isSenGreaterByYear(3))
 				.collect(Collectors.toList());
 	}
 	public static List<Worker> seniorityBetweenTwoAndFourYearsAndAgeGreaterThan(List<Employee> allEmployees, int age) {
 		if (allEmployees == null)
 			return null;
 		return streamWorkerCaster(allEmployees)
-				.filter(e -> e.isSenGreaterByYear(2) && e.isSenGreaterByYear(4) && e.isOlderThan(age))
+				.filter(e -> e.isSenGreaterByYear(2) && !e.isSenGreaterByYear(4) && e.isOlderThan(age))
 				.collect(Collectors.toList());
 
 	}

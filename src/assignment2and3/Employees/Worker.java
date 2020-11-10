@@ -20,11 +20,11 @@ public class Worker extends Employee {
 	}
 
 	public int getMonthOfSen() {
-		return (_employmentDate.getMonthValue() + ((_employmentDate.getYear() - LocalDate.now().getYear()) * 12));
+		return (_employmentDate.getMonthValue() + ((LocalDate.now().getYear() -_employmentDate.getYear()) * 12) );
 	}
 
 	public int getYearOFSen() {
-		return _employmentDate.getYear() - LocalDate.now().getYear();
+		return LocalDate.now().getYear() - _employmentDate.getYear();
 	}
 
 	public boolean isSenGreaterByYear(int years) {

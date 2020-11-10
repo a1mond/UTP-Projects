@@ -11,6 +11,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class HumanResourcesStatisticsTest {
     private Manager d1;
@@ -80,6 +81,59 @@ public class HumanResourcesStatisticsTest {
     public void subordinatesPayroll() {
         HumanResourcesStatistics.subordinatesPayroll(m2);
     }
+
+    @Test
+    public void olderThanAndEarnMore() {
+        Assert.assertEquals(
+                HumanResourcesStatistics.olderThanAndEarnMore(_allEmployees, w1),
+                List.of(d1, m2));
+    }
+
+    @Test
+    public void practiceLengthLongerThan() {
+        Assert.assertEquals(
+                HumanResourcesStatistics.practiceLengthLongerThan(_allEmployees, 130),
+                List.of(t4, t3));
+    }
+
+    @Test
+    public void seniorityLongerThan1() {
+        Assert.assertEquals(
+                HumanResourcesStatistics.seniorityLongerThan(_allEmployees, 120),
+                List.of(d1)
+        );
+    }
+
+    @Test
+    public void seniorityLongerThan2() {
+        Assert.assertEquals(
+                HumanResourcesStatistics.seniorityLongerThan(_allEmployees, w3),
+                List.of(d1, w5, w10)
+        );
+        Assert.assertEquals(
+                HumanResourcesStatistics.seniorityLongerThan(_allEmployees, w3)
+                        .stream().map(Employee::getSalary).collect(Collectors.toList()),
+                List.of(BigDecimal.valueOf(1122), BigDecimal.valueOf(1122), BigDecimal.valueOf(1122))
+        );
+    }
+
+    @Test
+    public void seniorityBetweenOneAndThreeYears() {
+        HumanResourcesStatistics.seniorityBetweenOneAndThreeYears(_allEmployees).forEach(e -> System.out.println(e.getFirstName()));
+        Assert.assertEquals(
+                HumanResourcesStatistics.seniorityBetweenOneAndThreeYears(_allEmployees),
+                List.of(w6, w2, w4)
+        );
+    }
+
+    @Test
+    public void seniorityBetweenTwoAndFourYearsAndAgeGreaterThan() {
+        Assert.assertEquals(
+                HumanResourcesStatistics.seniorityBetweenTwoAndFourYearsAndAgeGreaterThan(_allEmployees, 30),
+                List.of(w4)
+        );
+    }
+
 
     @SuppressWarnings("Duplicates")
     @Before
