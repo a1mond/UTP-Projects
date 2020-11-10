@@ -119,7 +119,6 @@ public class HumanResourcesStatisticsTest {
 
     @Test
     public void seniorityBetweenOneAndThreeYears() {
-        HumanResourcesStatistics.seniorityBetweenOneAndThreeYears(_allEmployees).forEach(e -> System.out.println(e.getFirstName()));
         Assert.assertEquals(
                 HumanResourcesStatistics.seniorityBetweenOneAndThreeYears(_allEmployees),
                 List.of(w6, w2, w4)
