@@ -6,6 +6,7 @@ import assignment2and3.Payroll.PayrollEntry;
 import java.math.BigDecimal;
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -123,46 +124,72 @@ public final class HumanResourcesStatistics {
 	public static List<Employee> olderThanAndEarnMore(List<Employee> allEmployees, Employee employee) {
 		if (allEmployees == null || employee == null)
 			return null;
+
+		Predicate<Employee> olderThan = e -> e.isOlderThan(employee);
+		Predicate<Employee> earnsMore = e -> e.isSalaryGreater(employee.getSalary());
+		Predicate<Employee> olderThanAndEarnsMore = olderThan.and(earnsMore);
+
 		return allEmployees
 				.stream()
-				.filter(e -> e.isOlderThan(employee) & e.isSalaryGreater(employee.getSalary()))
+				.filter(olderThanAndEarnsMore)
 				.collect(Collectors.toList());
 	}
 	public static List<Trainee> practiceLengthLongerThan(List<Employee> allEmployees, int daysCount) {
 		if (allEmployees == null || daysCount < 0)
 			return null;
+
+		Predicate<Trainee> isAppLonger = e -> e.isAppLonger(daysCount);
+
 		return streamTraineeCaster(allEmployees)
-				.filter(e -> e.isAppLonger(daysCount))
+				.filter(isAppLonger)
 				.collect(Collectors.toList());
 	}
 
 	public static List<Worker> seniorityLongerThan(List<Employee> allEmployees, int monthCount) {
 		if (allEmployees == null || monthCount < 0)
 			return null;
+
+		Predicate<Worker> isSenGreaterByMonth = e -> e.isSenGreaterByMonth(monthCount);
+
 		return streamWorkerCaster(allEmployees)
-				.filter(e -> e.isSenGreaterByMonth(monthCount))
+				.filter(isSenGreaterByMonth)
 				.collect(Collectors.toList());
 	}
 	public static List<Worker> seniorityLongerThan(List<Employee> allEmployees, Employee employee) {
 		if (allEmployees == null || employee == null)
 			return null;
+
+		Predicate<Worker> isSenGreaterByMonth = e -> e.isSenGreaterByMonth(((Worker)employee).getMonthOfSen());
+		Consumer<Worker> setSalary = e -> e.setSalary(employee.getSalary());
+
 		return streamWorkerCaster(allEmployees)
-				.filter(e -> e.isSenGreaterByMonth(((Worker)employee).getMonthOfSen()))
-				.peek(e -> e.setSalary(employee.getSalary()))
+				.filter(isSenGreaterByMonth)
+				.peek(setSalary)
 				.collect(Collectors.toList());
 	}
 	public static List<Worker> seniorityBetweenOneAndThreeYears(List<Employee> allEmployees) {
 		if (allEmployees == null)
 			return null;
+
+		Predicate<Worker> isGreaterBy1 = e -> e.isSenGreaterByYear(1);
+		Predicate<Worker> isLesserThan3 = e -> !e.isSenGreaterByYear(3);
+		Predicate<Worker> isSenBetweenOneAndThreeyears = isGreaterBy1.and(isLesserThan3);
+
 		return streamWorkerCaster(allEmployees)
-				.filter(e -> e.isSenGreaterByYear(1) && !e.isSenGreaterByYear(3))
+				.filter(isSenBetweenOneAndThreeyears)
 				.collect(Collectors.toList());
 	}
 	public static List<Worker> seniorityBetweenTwoAndFourYearsAndAgeGreaterThan(List<Employee> allEmployees, int age) {
 		if (allEmployees == null)
 			return null;
+
+		Predicate<Worker> isGreaterThan2 = e -> e.isSenGreaterByYear(2);
+		Predicate<Worker> isSmallerThan4 = e -> !e.isSenGreaterByYear(4);
+		Predicate<Worker> isOlderThan = e -> e.isOlderThan(age);
+		Predicate<Worker> isSeniorityBetweenTwoAndFourYearsAndAgeGreaterThan = isGreaterThan2.and(isSmallerThan4).and(isOlderThan);
+
 		return streamWorkerCaster(allEmployees)
-				.filter(e -> e.isSenGreaterByYear(2) && !e.isSenGreaterByYear(4) && e.isOlderThan(age))
+				.filter(isSeniorityBetweenTwoAndFourYearsAndAgeGreaterThan)
 				.collect(Collectors.toList());
 
 	}
