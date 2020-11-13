@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 public final class PersonDatabase {
 
-	List<Person> list;
+	private List<Person> list;
 
 	public PersonDatabase() {
 		this.list = InputParser.parse(new File("src/assignment4/input.data"));

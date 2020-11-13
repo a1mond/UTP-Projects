@@ -29,7 +29,6 @@ public final class InputParser {
 
 			while (sc.hasNextLine()) {
 				String line = sc.nextLine();
-				System.out.println(line);
 				String[] lines;
 
 				if (line.matches(GENERAL_REGEX)) {
