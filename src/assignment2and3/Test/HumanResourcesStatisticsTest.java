@@ -31,6 +31,7 @@ public class HumanResourcesStatisticsTest {
     //   |- Manager01
     //        |- Worker
     //        |- Worker
+
     //        |- Trainee
     //        |- ...
     //   |- Manager02
