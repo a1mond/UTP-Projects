@@ -16,9 +16,9 @@ public class Requestor extends Participant {
     @Override
     public void run() {
         while (true) {
-            System.out.println("REQUESTOR RUNNING ID: " + getId());
             Request r = new Request(this);
-            getMq().offerQueue(r);
+            System.out.println("REQUESTOR RUNNING ID: " + getId() + " ADDING REQUEST: [" + r + "]");
+            getMq().addToQueue(r);
 
             boolean consumed = false;
             while (!consumed) {

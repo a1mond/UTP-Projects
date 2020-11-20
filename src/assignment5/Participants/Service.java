@@ -16,8 +16,8 @@ public class Service extends Participant {
             Request r = getMq().getReqFromQueue();
             if (r != null) {
                 Response res = new Response(r);
-                System.out.println(">>> SERVICE: REQUEST: (" + r + "),\n\t\t\tRESPONSE: (" + res + ")");
-                r.getReq().getResQueue().offerQueue(res);
+                System.out.println(">>> SERVICE " + this.getId() + ": REQUEST: (" + r + "),\n\t\t\t\tRESPONSE: (" + res + ")");
+                r.getReq().getResQueue().addToQueue(res);
             }
         }
     }

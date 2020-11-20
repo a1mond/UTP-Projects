@@ -10,7 +10,7 @@ public class Test {
     private static List<Requestor> requestorList;
     private static MQueue queue;
 
-    private static final int count = 10;
+    private static final int COUNT = 3;
 
     public static void main(String[] args) {
         init();
@@ -21,7 +21,7 @@ public class Test {
         service = new Service(queue);
         requestorList = new LinkedList<>();
 
-        for (int i = 0; i < count; i++) {
+        for (int i = 0; i < COUNT; i++) {
             requestorList.add(new Requestor(queue));
         }
     }

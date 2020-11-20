@@ -9,8 +9,8 @@ public class MQueue {
     public MQueue() {
         this.queue = new PriorityQueue<>();
     }
-    public synchronized void offerQueue(Message m) {
-        queue.offer(m);
+    public synchronized void addToQueue(Message m) {
+        queue.add(m);
     }
     public synchronized Request getReqFromQueue() {
         return (Request) queue.poll();
