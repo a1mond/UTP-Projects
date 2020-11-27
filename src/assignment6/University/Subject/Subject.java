@@ -3,7 +3,9 @@ package assignment6.University.Subject;
 import assignment6.People.Teacher.Teacher;
 import assignment6.University.Department.Department;
 
-public class Subject {
+import java.util.Objects;
+
+public class Subject implements Comparable<Subject> {
     private final String name;
     private final Department supervisor;
     private final Teacher lecturer;
@@ -24,5 +26,33 @@ public class Subject {
 
     public Teacher getLecturer() {
         return lecturer;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Subject)) return false;
+        Subject subject = (Subject) o;
+        return Objects.equals(name, subject.name) &&
+                Objects.equals(supervisor, subject.supervisor) &&
+                Objects.equals(lecturer, subject.lecturer);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, supervisor, lecturer);
+    }
+
+    @Override
+    public int compareTo(Subject o) {
+        int result;
+        result = name.compareTo(o.getName());
+        if (result == 0) {
+            result = supervisor.compareTo(o.getSupervisor());
+            if (result == 0) {
+                return lecturer.compareTo(o.getLecturer());
+            }
+        }
+        return result;
     }
 }

@@ -4,6 +4,7 @@ import assignment6.People.Person.Enum.Nationality;
 import assignment6.People.Person.Enum.Sex;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public abstract class Person implements Comparable<Person> {
     private final long pesel;
@@ -48,9 +49,28 @@ public abstract class Person implements Comparable<Person> {
         result = firstName.compareTo(o.firstName);
         if (result == 0) {
             result = lastName.compareTo(o.lastName);
-            if (result == 0)
+            if (result == 0) {
                 return birthDate.compareTo(o.birthDate);
+            }
         }
         return result;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Person person = (Person) o;
+        return pesel == person.pesel &&
+                Objects.equals(firstName, person.firstName) &&
+                Objects.equals(lastName, person.lastName) &&
+                sex == person.sex &&
+                Objects.equals(birthDate, person.birthDate) &&
+                nationality == person.nationality;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(pesel, firstName, lastName, sex, birthDate, nationality);
     }
 }
