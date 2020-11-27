@@ -5,7 +5,7 @@ import assignment5.Participants.Service;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Test {
+public class CommunicationTest {
     private static Service service;
     private static List<Requestor> requestorList;
     private static MQueue queue;
