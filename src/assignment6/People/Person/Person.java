@@ -47,6 +47,10 @@ public abstract class Person implements Comparable<Person> {
         return nationality;
     }
 
+    public Sex getSex() {
+        return sex;
+    }
+
     @Override
     public int compareTo(Person o) {
         int result = collator.compare(this.firstName, o.getFirstName());

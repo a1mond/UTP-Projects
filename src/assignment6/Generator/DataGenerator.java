@@ -31,6 +31,8 @@ public class DataGenerator {
                             STUDENT_GROUP_COUNTER = 10,
                             STUDENT_GROUP_STUDENTS_COUNTER = 10;
 
+    private static final int[] checkSumArr = {1, 3, 7, 9, 1, 3, 7, 9, 1, 3};
+
     public static StudentC generateStudents() {
         StudentC studentList = new StudentC();
 
@@ -66,15 +68,17 @@ public class DataGenerator {
 
 
             for (int i = 0; i < TEACHER_COUNTER; i++) {
+                LocalDate localDate = LocalDate.of(
+                        getRandom("year"),
+                        getRandom("month"),
+                        getRandom("day"));
+                Sex sex = Sex.random();
                 teacherList.add(new Teacher(
                         getRandomPesel(),
                         firstNames.get((int) (Math.random() * firstNames.size())),
                         lastNames.get((int) (Math.random() * lastNames.size())),
-                        Sex.random(),
-                        LocalDate.of(
-                                getRandom("year"),
-                                getRandom("month"),
-                                getRandom("day")),
+                        sex,
+                        localDate,
                         Nationality.random(),
                         AcademicDegree.random(),
                         LocalDate.of(
@@ -168,7 +172,16 @@ public class DataGenerator {
         }
         return sb.toString();
     }
-    private static long getRandomPesel() {
-        return 1000000000L + Math.abs(new Random().nextInt());
+    private static long getPesel (LocalDate localdate, Sex sex) {
+        return Long.parseLong(getFormatedDate(localdate) + getRandomZZZ() + sex.ordinal());
+    }
+    private static String getFormatedDate(LocalDate localDate) {
+        return String.valueOf(localDate.getYear()).substring(3, 4) + localDate.getMonthValue() + localDate.getDayOfMonth();
+    }
+    private static int getRandomZZZ() {
+        return 100 + new Random().nextInt(899);
+    }
+    private static int getCheckSum() {
+
     }
 }
