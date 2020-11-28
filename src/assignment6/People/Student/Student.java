@@ -8,9 +8,9 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 public class Student extends Person {
-    private final long bookNum;
+    private final int bookNum;
 
-    public Student(long pesel, String firstName, String lastName, Sex sex, LocalDate birthDate, Nationality nationality, long bookNum) {
+    public Student(long pesel, String firstName, String lastName, Sex sex, LocalDate birthDate, Nationality nationality, int bookNum) {
         super(pesel, firstName, lastName, sex, birthDate, nationality);
         this.bookNum = bookNum;
     }
@@ -32,4 +32,6 @@ public class Student extends Person {
     public int hashCode() {
         return Objects.hash(super.hashCode(), bookNum);
     }
+
+
 }

@@ -9,8 +9,9 @@ public class StudentGroup implements Comparable<StudentGroup> {
     private final String name;
     private List<Student> studentList;
 
-    public StudentGroup(String name) {
+    public StudentGroup(String name, List<Student> studentList) {
         this.name = name;
+        this.studentList = studentList;
     }
 
     public String getName() {
@@ -26,8 +27,7 @@ public class StudentGroup implements Comparable<StudentGroup> {
         if (this == o) return true;
         if (!(o instanceof StudentGroup)) return false;
         StudentGroup that = (StudentGroup) o;
-        return Objects.equals(name, that.name) &&
-                Objects.equals(studentList, that.studentList);
+        return Objects.equals(name, that.name);
     }
 
     @Override
@@ -42,5 +42,10 @@ public class StudentGroup implements Comparable<StudentGroup> {
         if (result == 0)
             return Integer.compare(studentList.size(), o.getStudentList().size());
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

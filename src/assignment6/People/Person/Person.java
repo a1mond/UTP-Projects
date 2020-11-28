@@ -3,6 +3,7 @@ package assignment6.People.Person;
 import assignment6.People.Person.Enum.Nationality;
 import assignment6.People.Person.Enum.Sex;
 
+import java.text.Collator;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -14,6 +15,8 @@ public abstract class Person implements Comparable<Person> {
     private final LocalDate birthDate;
     private final Nationality nationality;
 
+    private final Collator collator;
+
     public Person(long pesel, String firstName, String lastName, Sex sex, LocalDate birthDate, Nationality nationality) {
         this.pesel = pesel;
         this.firstName = firstName;
@@ -21,6 +24,7 @@ public abstract class Person implements Comparable<Person> {
         this.sex = sex;
         this.birthDate = birthDate;
         this.nationality = nationality;
+        this.collator = Collator.getInstance(Nationality.PL.getLocale());
     }
 
     public long getPesel() {
@@ -45,13 +49,11 @@ public abstract class Person implements Comparable<Person> {
 
     @Override
     public int compareTo(Person o) {
-        int result;
-        result = firstName.compareTo(o.firstName);
+        int result = collator.compare(this.firstName, o.getFirstName());
         if (result == 0) {
-            result = lastName.compareTo(o.lastName);
-            if (result == 0) {
-                return birthDate.compareTo(o.birthDate);
-            }
+            result = collator.compare(this.lastName, o.getLastName());
+            if (result == 0)
+                return collator.compare(this.birthDate, o.getBirthDate());
         }
         return result;
     }
@@ -72,5 +74,10 @@ public abstract class Person implements Comparable<Person> {
     @Override
     public int hashCode() {
         return Objects.hash(pesel, firstName, lastName, sex, birthDate, nationality);
+    }
+
+    @Override
+    public String toString() {
+        return pesel + " " + firstName + " " + lastName + " " + birthDate + " " + nationality;
     }
 }

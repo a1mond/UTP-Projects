@@ -28,13 +28,12 @@ public class Department implements Comparable<Department> {
         if (this == o) return true;
         if (!(o instanceof Department)) return false;
         Department that = (Department) o;
-        return Objects.equals(name, that.name) &&
-                Objects.equals(list, that.list);
+        return Objects.equals(name, that.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, list);
+        return Objects.hash(name);
     }
 
     @Override
@@ -44,5 +43,10 @@ public class Department implements Comparable<Department> {
         if (result == 0)
             return Integer.compare(list.size(), o.getList().size());
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

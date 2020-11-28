@@ -55,4 +55,9 @@ public class Subject implements Comparable<Subject> {
         }
         return result;
     }
+
+    @Override
+    public String toString() {
+        return name + ", department: " + supervisor + ", lecturer: " + lecturer.getFirstName() + " " + lecturer.getLastName();
+    }
 }
