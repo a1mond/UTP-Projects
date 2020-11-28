@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 public abstract class Person implements Comparable<Person> {
-    private final long pesel;
+    private final String pesel;
     private final String firstName,
                          lastName;
     private final Sex sex;
@@ -17,7 +17,7 @@ public abstract class Person implements Comparable<Person> {
 
     private final Collator collator;
 
-    public Person(long pesel, String firstName, String lastName, Sex sex, LocalDate birthDate, Nationality nationality) {
+    public Person(String pesel, String firstName, String lastName, Sex sex, LocalDate birthDate, Nationality nationality) {
         this.pesel = pesel;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -27,7 +27,7 @@ public abstract class Person implements Comparable<Person> {
         this.collator = Collator.getInstance(Nationality.PL.getLocale());
     }
 
-    public long getPesel() {
+    public String getPesel() {
         return pesel;
     }
 
@@ -67,7 +67,7 @@ public abstract class Person implements Comparable<Person> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Person person = (Person) o;
-        return pesel == person.pesel &&
+        return pesel.equals(person.pesel) &&
                 Objects.equals(firstName, person.firstName) &&
                 Objects.equals(lastName, person.lastName) &&
                 sex == person.sex &&

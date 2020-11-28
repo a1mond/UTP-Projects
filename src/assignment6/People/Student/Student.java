@@ -10,7 +10,7 @@ import java.util.Objects;
 public class Student extends Person {
     private final int bookNum;
 
-    public Student(long pesel, String firstName, String lastName, Sex sex, LocalDate birthDate, Nationality nationality, int bookNum) {
+    public Student(String pesel, String firstName, String lastName, Sex sex, LocalDate birthDate, Nationality nationality, int bookNum) {
         super(pesel, firstName, lastName, sex, birthDate, nationality);
         this.bookNum = bookNum;
     }

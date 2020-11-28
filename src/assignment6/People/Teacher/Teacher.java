@@ -12,7 +12,7 @@ public class Teacher extends Person {
     private final AcademicDegree academicDegree;
     private final LocalDate hireDate;
 
-    public Teacher(long pesel, String firstName, String lastName, Sex sex, LocalDate birthDate, Nationality nationality, AcademicDegree academicDegree, LocalDate hireDate) {
+    public Teacher(String pesel, String firstName, String lastName, Sex sex, LocalDate birthDate, Nationality nationality, AcademicDegree academicDegree, LocalDate hireDate) {
         super(pesel, firstName, lastName, sex, birthDate, nationality);
         this.academicDegree = academicDegree;
         this.hireDate = hireDate;

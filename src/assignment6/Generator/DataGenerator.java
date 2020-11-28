@@ -41,15 +41,17 @@ public class DataGenerator {
             Map<Integer, String> lastNames = readFile(LNAME_FILE);
 
             for (int i = 0; i < STUDENT_COUNTER; i++) {
+                LocalDate localDate = LocalDate.of(
+                        getRandom("year"),
+                        getRandom("month"),
+                        getRandom("day"));
+                Sex sex = Sex.random();
                 studentList.add(new Student(
-                        getRandomPesel(),
+                        getPesel(localDate, sex),
                         firstNames.get((int)(Math.random() * firstNames.size())),
                         lastNames.get((int)(Math.random() * lastNames.size())),
-                        Sex.random(),
-                        LocalDate.of(
-                                getRandom("year"),
-                                getRandom("month"),
-                                getRandom("day")),
+                        sex,
+                        localDate,
                         Nationality.random(),
                         getRandom("bookno")
                 ));
@@ -74,7 +76,7 @@ public class DataGenerator {
                         getRandom("day"));
                 Sex sex = Sex.random();
                 teacherList.add(new Teacher(
-                        getRandomPesel(),
+                        getPesel(localDate, sex),
                         firstNames.get((int) (Math.random() * firstNames.size())),
                         lastNames.get((int) (Math.random() * lastNames.size())),
                         sex,
@@ -149,13 +151,12 @@ public class DataGenerator {
     }
     private static int getRandom(String type) {
         return switch (type) {
-            case "year" -> (int) (Math.random() * 30) + 1970;
+            case "year" -> (int) (Math.random() * 40) + 1970;
             case "month" -> (int) (Math.random() * 12) + 1;
             case "day" -> (int) (Math.random() * 27) + 1;
             case "bookno" -> (int) (Math.random() * 10000) + 10000;
             case "hire-year" -> (int) (Math.random() * 19) + 2000;
-            case "group" -> (int) (Math.random() * 20) + 1;
-            case "dep" -> (int) (Math.random() * 20) + 1;
+            case "group", "dep" -> (int) (Math.random() * 20) + 1;
             default -> 0;
         };
     }
@@ -172,16 +173,32 @@ public class DataGenerator {
         }
         return sb.toString();
     }
-    private static long getPesel (LocalDate localdate, Sex sex) {
-        return Long.parseLong(getFormatedDate(localdate) + getRandomZZZ() + sex.ordinal());
-    }
-    private static String getFormatedDate(LocalDate localDate) {
-        return String.valueOf(localDate.getYear()).substring(3, 4) + localDate.getMonthValue() + localDate.getDayOfMonth();
+    private static String getPesel(LocalDate localdate, Sex sex) {
+        String str = getFormatedDate(localdate) + getRandomZZZ() + sex.ordinal();
+        int cs = 0;
+        for (int i = 0; i < 10; i++) {
+            cs += Integer.parseInt(String.valueOf(str.toCharArray()[i])) + checkSumArr[i];
+        }
+        int controlDigit = cs % 10 == 0 ? 0 : 10 - (cs % 10);
+        return str + controlDigit;
     }
     private static int getRandomZZZ() {
         return 100 + new Random().nextInt(899);
     }
-    private static int getCheckSum() {
+    private static String getFormatedDate(LocalDate localDate) {
+        int month = getMonth(localDate);
+        return String.valueOf(localDate.getYear()).substring(2) +
+                (month < 10 ? "0" + month : month) + "" +
+                (localDate.getDayOfMonth() < 10 ? "0" + localDate.getDayOfMonth() : localDate.getDayOfMonth());
+    }
+    private static int getMonth(LocalDate localDate) {
+        int century = Integer.parseInt(String.valueOf(localDate.getYear()).substring(0, 2));
 
+        return switch (century) {
+            case 18 -> localDate.getMonthValue() + 80;
+            case 20 -> localDate.getMonthValue() + 20;
+            case 21 -> localDate.getMonthValue() + 40;
+            default -> localDate.getMonthValue();
+        };
     }
 }

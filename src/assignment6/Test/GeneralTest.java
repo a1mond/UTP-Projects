@@ -28,6 +28,7 @@ public class GeneralTest {
 
     @Test
     public void generateStudents() {
+        students.forEach(System.out::println);
         Assert.assertEquals(DataGenerator.STUDENT_COUNTER, students.size());
 
         Student tmp = students.get(0);
