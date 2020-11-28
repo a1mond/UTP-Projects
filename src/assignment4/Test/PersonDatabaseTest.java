@@ -18,22 +18,23 @@ public class PersonDatabaseTest {
     }
     @Test
     public void sortedByFirstName() {
-        Assert.assertEquals(pd.sortedByFirstName().stream().map(Person::get_firstName).collect(Collectors.toList()),
-                List.of("John", "John", "Johnny", "Mark", "Vladyslav"));
+        Assert.assertEquals(List.of("John", "John", "Johnny", "Mark", "Vladyslav"),
+                pd.sortedByFirstName().stream().map(Person::get_firstName).collect(Collectors.toList()));
     }
     @Test
     public void sortedBySurnameFirstNameAndBirthdate() {
-        Assert.assertEquals(pd.sortedBySurnameFirstNameAndBirthdate().stream().map(Person::get_surname).collect(Collectors.toList()),
-                List.of("Smith", "Doe", "Depp", "Brown", "Kotyk"));
+        Assert.assertEquals(List.of("Smith", "Doe", "Depp", "Brown", "Kotyk"),
+                pd.sortedBySurnameFirstNameAndBirthdate().stream().map(Person::get_surname).collect(Collectors.toList()));
     }
     @Test
     public void sortedByBirthdate() {
-        Assert.assertEquals(pd.sortedByBirthdate().stream().map(Person::get_firstName).collect(Collectors.toList()),
-                List.of("Johnny", "John", "Mark", "John", "Vladyslav"));
+        Assert.assertEquals(List.of("Johnny", "John", "Mark", "John", "Vladyslav"),
+                pd.sortedByBirthdate().stream().map(Person::get_firstName).collect(Collectors.toList()));
     }
     @Test
     public void bornOnDay() throws ParseException {
-        Assert.assertEquals(pd.bornOnDay(InputParser.DATEFORMAT.parse("2002-08-24")).stream().map(Person::get_firstName).collect(Collectors.toList()),
-                List.of("Vladyslav"));
+        Assert.assertEquals(List.of("Vladyslav"),
+               pd.bornOnDay(InputParser.DATEFORMAT.parse("2002-08-24")).stream().map(Person::get_firstName).collect(Collectors.toList())
+        );
     }
 }

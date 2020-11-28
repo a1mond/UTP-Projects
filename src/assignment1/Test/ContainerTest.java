@@ -28,14 +28,14 @@ public class ContainerTest {
     public void aggregateAllElements() {
         Integer containerAgg = container.aggregateAllElements();
         Integer basicAgg = book1.aggregate(book2.aggregate(null));
-        Assert.assertEquals(containerAgg, basicAgg);
+        Assert.assertEquals(basicAgg, containerAgg);
     }
 
     @Test
     public void cloneElementAtIndex() {
         Book cloned1 = this.container.cloneElementAtIndex(0);
 
-        Assert.assertEquals(this.container.elements().get(0).getDateOfIssue(), cloned1.getDateOfIssue());
+        Assert.assertEquals(cloned1.getDateOfIssue(), this.container.elements().get(0).getDateOfIssue());
         //System.out.println(this.container.elements().get(0) + " ||| " + cloned1);
         Assert.assertNotSame(this.container.elements().get(0), cloned1);
     }

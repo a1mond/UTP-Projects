@@ -46,32 +46,32 @@ public class HumanResourcesStatisticsTest {
     @Test
     public void bonusTotal() {
         BigDecimal total = HumanResourcesStatistics.bonusTotal(_allEmployees);
-        Assert.assertEquals(new BigDecimal(14844), total);
+        Assert.assertEquals(total, new BigDecimal(14844));
     }
 
     @Test
     public void getLongestSeniorityEmployee() {
-        Assert.assertEquals(d1, HumanResourcesStatistics.   getLongestSeniorityEmployee(_allEmployees));
+        Assert.assertEquals(HumanResourcesStatistics.getLongestSeniorityEmployee(_allEmployees), d1);
     }
     @Test
     public void getHighestSalary() {
-        Assert.assertEquals(BigDecimal.valueOf(20000),
-                HumanResourcesStatistics.getHighestSalary(_allEmployees));
+        Assert.assertEquals(HumanResourcesStatistics.getHighestSalary(_allEmployees),
+                BigDecimal.valueOf(20000));
     }
     @Test
     public void getHighestSalaryWithBonus() {
-        Assert.assertEquals(BigDecimal.valueOf(30000),
-                HumanResourcesStatistics.getHighestSalaryWithBonus(_allEmployees));
+        Assert.assertEquals(HumanResourcesStatistics.getHighestSalaryWithBonus(_allEmployees),
+                BigDecimal.valueOf(30000));
     }
     @Test
     public void getSurnameBeginWithA() {
-        Assert.assertEquals(List.of(w6),
-                HumanResourcesStatistics.getSurnameBeginWithA(_allEmployees));
+        Assert.assertEquals(HumanResourcesStatistics.getSurnameBeginWithA(_allEmployees),
+                List.of(w6));
     }
     @Test
     public void moreThan1000() {
-        Assert.assertEquals(_allEmployees,
-                HumanResourcesStatistics.moreThan1000(_allEmployees));
+        Assert.assertEquals(HumanResourcesStatistics.moreThan1000(_allEmployees),
+                _allEmployees);
     }
     @Test
     public void payroll() {
@@ -86,51 +86,51 @@ public class HumanResourcesStatisticsTest {
     @Test
     public void olderThanAndEarnMore() {
         Assert.assertEquals(
-                HumanResourcesStatistics.olderThanAndEarnMore(_allEmployees, w1),
-                List.of(d1, m2));
+                List.of(d1, m2),
+                HumanResourcesStatistics.olderThanAndEarnMore(_allEmployees, w1));
     }
 
     @Test
     public void practiceLengthLongerThan() {
         Assert.assertEquals(
-                HumanResourcesStatistics.practiceLengthLongerThan(_allEmployees, 130),
-                List.of(t4, t3));
+                List.of(t4, t3),
+                HumanResourcesStatistics.practiceLengthLongerThan(_allEmployees, 130));
     }
 
     @Test
     public void seniorityLongerThan1() {
         Assert.assertEquals(
-                HumanResourcesStatistics.seniorityLongerThan(_allEmployees, 120),
-                List.of(d1)
+                List.of(d1),
+                HumanResourcesStatistics.seniorityLongerThan(_allEmployees, 120)
         );
     }
 
     @Test
     public void seniorityLongerThan2() {
         Assert.assertEquals(
-                HumanResourcesStatistics.seniorityLongerThan(_allEmployees, w3),
-                List.of(d1, w5, w10)
+                List.of(d1, w5, w10),
+                HumanResourcesStatistics.seniorityLongerThan(_allEmployees, w3)
         );
         Assert.assertEquals(
+                List.of(BigDecimal.valueOf(1122), BigDecimal.valueOf(1122), BigDecimal.valueOf(1122)),
                 HumanResourcesStatistics.seniorityLongerThan(_allEmployees, w3)
-                        .stream().map(Employee::getSalary).collect(Collectors.toList()),
-                List.of(BigDecimal.valueOf(1122), BigDecimal.valueOf(1122), BigDecimal.valueOf(1122))
+                        .stream().map(Employee::getSalary).collect(Collectors.toList())
         );
     }
 
     @Test
     public void seniorityBetweenOneAndThreeYears() {
         Assert.assertEquals(
-                HumanResourcesStatistics.seniorityBetweenOneAndThreeYears(_allEmployees),
-                List.of(w6, w2, w4)
+                List.of(w6, w2, w4),
+                HumanResourcesStatistics.seniorityBetweenOneAndThreeYears(_allEmployees)
         );
     }
 
     @Test
     public void seniorityBetweenTwoAndFourYearsAndAgeGreaterThan() {
         Assert.assertEquals(
-                HumanResourcesStatistics.seniorityBetweenTwoAndFourYearsAndAgeGreaterThan(_allEmployees, 30),
-                List.of(w4)
+                List.of(w4),
+                HumanResourcesStatistics.seniorityBetweenTwoAndFourYearsAndAgeGreaterThan(_allEmployees, 30)
         );
     }
 

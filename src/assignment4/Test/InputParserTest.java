@@ -18,7 +18,8 @@ public final class InputParserTest {
     }
     @Test
     public void parse() {
-        Assert.assertEquals(list.stream().map(Person::get_surname).collect(Collectors.toList()),
-                testList);
+
+        Assert.assertEquals(testList,
+                list.stream().map(Person::get_surname).collect(Collectors.toList()));
     }
 }
