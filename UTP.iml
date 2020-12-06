@@ -9,10 +9,10 @@
       <sourceFolder url="file://$MODULE_DIR$/src/assignment4/Test" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/assignment5/Test" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/assignment6/Test" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/assignment7/Test" isTestSource="true" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="junit-4.2" level="project" />
     <orderEntry type="library" name="junit-4.10" level="project" />
   </component>
 </module>
