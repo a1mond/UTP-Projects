@@ -1,8 +1,8 @@
-package assignment4.Comparators;
+package assignment4and8.Comparators;
+
+import assignment4and8.Classes.Person;
 
 import java.util.Comparator;
-
-import assignment4.Classes.Person;
 
 public final class BirthdateComparator implements Comparator<Person> {
 

@@ -1,20 +1,33 @@
-import assignment4.Classes.InputParser;
-import assignment4.Classes.Person;
-import assignment4.Classes.PersonDatabase;
+import assignment4and8.Classes.InputParser;
+import assignment4and8.Classes.Person;
+import assignment4and8.Classes.PersonDatabase;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.*;
 import java.text.ParseException;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class PersonDatabaseTest {
     private PersonDatabase pd;
+    private PersonDatabase pd_s;
 
     @Before
-    public void init() {
+    public void init() throws FileNotFoundException {
         pd = new PersonDatabase();
+
+        File streamFile = new File("src/assignment4and8/input_serialized.data");
+
+        DataOutputStream dos = new DataOutputStream(
+                new FileOutputStream(streamFile)
+        );
+        pd.serialize(dos);
+        DataInputStream dis = new DataInputStream(
+                new FileInputStream(streamFile)
+        );
+        pd_s = PersonDatabase.deserialize(dis);
     }
     @Test
     public void sortedByFirstName() {
@@ -36,5 +49,10 @@ public class PersonDatabaseTest {
         Assert.assertEquals(List.of("Vladyslav"),
                pd.bornOnDay(InputParser.DATEFORMAT.parse("2002-08-24")).stream().map(Person::get_firstName).collect(Collectors.toList())
         );
+    }
+    @Test
+    public void serializeDeserialize() {
+        Assert.assertEquals(pd.getList().size(), pd_s.getList().size());
+        Assert.assertEquals(pd.toString(), pd_s.toString());
     }
 }

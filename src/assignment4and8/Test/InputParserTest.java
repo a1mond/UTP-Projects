@@ -1,5 +1,5 @@
-import assignment4.Classes.InputParser;
-import assignment4.Classes.Person;
+import assignment4and8.Classes.InputParser;
+import assignment4and8.Classes.Person;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
