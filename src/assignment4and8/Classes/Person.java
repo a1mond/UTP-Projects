@@ -33,6 +33,7 @@ public class Person implements Comparable<Person> {
 			stream.writeUTF(_firstName);
 			stream.writeUTF(_surname);
 			stream.writeUTF(new SimpleDateFormat("yyyy-MM-dd").format(_birthdate));
+			stream.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

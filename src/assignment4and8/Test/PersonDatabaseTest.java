@@ -18,7 +18,7 @@ public class PersonDatabaseTest {
     public void init() throws FileNotFoundException {
         pd = new PersonDatabase();
 
-        File streamFile = new File("src/assignment4and8/input_serialized.data");
+        File streamFile = new File("src/assignment4and8/input_serialized");
 
         DataOutputStream dos = new DataOutputStream(
                 new FileOutputStream(streamFile)
@@ -54,5 +54,6 @@ public class PersonDatabaseTest {
     public void serializeDeserialize() {
         Assert.assertEquals(pd.getList().size(), pd_s.getList().size());
         Assert.assertEquals(pd.toString(), pd_s.toString());
+        System.out.println(pd_s);
     }
 }
