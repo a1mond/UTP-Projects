@@ -13,7 +13,7 @@ public final class InputParserTest {
     private List<String> testList;
     @Before
     public void init() {
-        list = InputParser.parse(new File("src/assignment4/input.data"));
+        list = InputParser.parse(new File("src/assignment4and8/input.data"));
         testList = List.of("Smith", "Brown", "Doe", "Depp", "Kotyk");
     }
     @Test
