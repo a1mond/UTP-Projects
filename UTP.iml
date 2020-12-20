@@ -11,9 +11,11 @@
       <sourceFolder url="file://$MODULE_DIR$/src/assignment7/Test" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/assignment4and8/Test" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/assignment9/Test" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/assignment10/test" isTestSource="true" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="junit-4.10" level="project" />
+    <orderEntry type="library" name="postgresql-42.2.18" level="project" />
   </component>
 </module>
