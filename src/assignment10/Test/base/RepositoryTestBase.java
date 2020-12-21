@@ -1,3 +1,5 @@
+package base;
+
 import assignment10.dtos.DTOBase;
 import assignment10.repositories.IRepository;
 import org.junit.After;
@@ -20,6 +22,14 @@ public abstract class RepositoryTestBase<TDTO extends DTOBase, TRepository exten
 		if (_repository != null) {
 			_repository.rollbackTransaction();
 		}
+	}
+
+	public TRepository get_repository() {
+		return _repository;
+	}
+
+	public void addToRepository(TDTO tdto) {
+		_repository.add(tdto);
 	}
 
 	protected abstract TRepository Create();

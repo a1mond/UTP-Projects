@@ -1,12 +1,16 @@
-import assignment10.UnimplementedException;
+package groupAndUser;
+
 import assignment10.dtos.GroupDTO;
+import assignment10.implementation.GroupRepository;
 import assignment10.repositories.IGroupRepository;
+import base.RepositoryTestBase;
 import org.junit.Test;
 
 public class GroupRepositoryTest extends RepositoryTestBase<GroupDTO, IGroupRepository> {
 
 	@Test
 	public void add() {
+
 	}
 
 	@Test
@@ -29,8 +33,7 @@ public class GroupRepositoryTest extends RepositoryTestBase<GroupDTO, IGroupRepo
 	public void findByName() {
 	}
 
-	@Override
 	protected IGroupRepository Create() {
-		throw new UnimplementedException();
+		return new GroupRepository();
 	}
 }
