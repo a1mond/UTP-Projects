@@ -7,6 +7,8 @@ import base.RepositoryTestBase;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.List;
+
 public final class UserRepositoryTest extends RepositoryTestBase<UserDTO, IUserRepository> {
 
 	@Test
@@ -43,14 +45,30 @@ public final class UserRepositoryTest extends RepositoryTestBase<UserDTO, IUserR
 
 	@Test
 	public void delete() {
+		UserDTO udto = new UserDTO(1, "a1mond", "123123");
+		get_repository().add(udto);
+		Assert.assertTrue(get_repository().exists(udto));
+		get_repository().delete(udto);
+		Assert.assertFalse(get_repository().exists(udto));
 	}
 
 	@Test
 	public void findById() {
+		UserDTO udto = new UserDTO(1, "a1mond", "123123");
+		get_repository().add(udto);
+		Assert.assertTrue(get_repository().exists(udto));
+		Assert.assertEquals(udto, get_repository().findById(1));
 	}
 	
 	@Test
 	public void findByName() {
+		UserDTO udto1 = new UserDTO(1, "a1mond", "123123");
+		UserDTO udto2 = new UserDTO(2, "a1mond", "312312");
+
+		get_repository().add(udto1);
+		get_repository().add(udto2);
+		Assert.assertEquals(2, get_repository().findByName("a1mond").size());
+		Assert.assertEquals(List.of(udto1, udto2), get_repository().findByName("a1mond"));
 	}
 	
 	@Override

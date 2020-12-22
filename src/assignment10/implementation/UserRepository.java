@@ -93,12 +93,14 @@ public class UserRepository implements IUserRepository {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
-            resultSet.next();
-            return new UserDTO(
-                    resultSet.getInt(1),
-                    resultSet.getString(2),
-                    resultSet.getString(3)
-            );
+            while (resultSet.next()) {
+                return new UserDTO(
+                        resultSet.getInt(1),
+                        resultSet.getString(2),
+                        resultSet.getString(3)
+                );
+            }
+            return null;
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
@@ -154,7 +156,6 @@ public class UserRepository implements IUserRepository {
 
     @Override
     public boolean exists(UserDTO dto) {
-        System.out.println(dto.getId());
         UserDTO dto2 = findById(dto.getId());
         return dto2 != null;
     }
