@@ -117,11 +117,14 @@ public class GroupRepository implements IGroupRepository {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
-            return new GroupDTO(
-                    resultSet.getInt(1),
-                    resultSet.getString(2),
-                    resultSet.getString(3)
-            );
+            while (resultSet.next()) {
+                return new GroupDTO(
+                        resultSet.getInt(1),
+                        resultSet.getString(2),
+                        resultSet.getString(3)
+                );
+            }
+            return null;
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
@@ -165,6 +168,7 @@ public class GroupRepository implements IGroupRepository {
             String query = "SELECT COUNT (*) FROM " + T_GROUP;
             PreparedStatement statement = connection.prepareStatement(query);
             ResultSet resultSet = statement.executeQuery();
+            resultSet.next();
             return resultSet.getInt(1);
         } catch (SQLException e) {
             e.printStackTrace();

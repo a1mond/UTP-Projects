@@ -1,6 +1,7 @@
 package assignment10.implementation;
 
 import assignment10.ConnectorDB;
+import assignment10.dtos.GroupDTO;
 import assignment10.dtos.UserDTO;
 import assignment10.repositories.IUserRepository;
 
@@ -10,6 +11,8 @@ import java.util.List;
 
 public class UserRepository implements IUserRepository {
     private static final String T_USERS = "Users",
+                                T_USERGROUP = "UserGroup",
+                                G_ID = "gId",
                                 C_ID = "uId",
                                 C_LOGIN = "uLogin",
                                 C_PASSWORD = "uPassword";
@@ -180,6 +183,36 @@ public class UserRepository implements IUserRepository {
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    @Override
+    public void addToUserGroup(UserDTO udto, GroupDTO gdto) {
+        try {
+            addToGroup(gdto);
+            PreparedStatement statement;
+            String query = "INSERT INTO " + T_USERGROUP + "(" + C_ID + ", " + G_ID + ")" +
+                    "VALUES (?,?)";
+            statement = connection.prepareStatement(query);
+            statement.setInt(1, udto.getId());
+            statement.setInt(2, gdto.getId());
+            statement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    private void addToGroup(GroupDTO dto) {
+        try {
+            PreparedStatement statement;
+            String query = "INSERT INTO GROUPS (gId, gName, gDesc)" +
+                    "VALUES (?,?,?)";
+            statement = connection.prepareStatement(query);
+            statement.setInt(1, dto.getId());
+            statement.setString(2, dto.getName());
+            statement.setString(3, dto.getDescription());
+            statement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }

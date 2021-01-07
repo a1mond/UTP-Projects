@@ -1,12 +1,16 @@
-package groupAndUser;
+package assignment10.groupAndUser;
 
+import assignment10.base.RepositoryTestBase;
+import assignment10.dtos.GroupDTO;
 import assignment10.dtos.UserDTO;
 import assignment10.implementation.UserRepository;
 import assignment10.repositories.IUserRepository;
-import base.RepositoryTestBase;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 public final class UserRepositoryTest extends RepositoryTestBase<UserDTO, IUserRepository> {
@@ -70,7 +74,27 @@ public final class UserRepositoryTest extends RepositoryTestBase<UserDTO, IUserR
 		Assert.assertEquals(2, get_repository().findByName("a1mond").size());
 		Assert.assertEquals(List.of(udto1, udto2), get_repository().findByName("a1mond"));
 	}
-	
+
+	@Test
+	public void addToUserGroup() {
+		UserDTO udto = new UserDTO(10, "a1mond", "123123");
+		GroupDTO gdto = new GroupDTO(1, "16c", "best group ever");
+
+		get_repository().add(udto);
+		get_repository().addToUserGroup(udto, gdto);
+
+		try {
+			PreparedStatement statement = get_repository().getConnection()
+					.prepareStatement("SELECT * FROM UserGroup WHERE uId = ?");
+			statement.setInt(1, udto.getId());
+			ResultSet resultSet = statement.executeQuery();
+			resultSet.next();
+			Assert.assertEquals(10, resultSet.getInt(1));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
 	@Override
 	protected IUserRepository Create() {
 		return new UserRepository();

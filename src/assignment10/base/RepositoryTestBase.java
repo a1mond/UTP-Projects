@@ -1,4 +1,4 @@
-package base;
+package assignment10.base;
 
 import assignment10.dtos.DTOBase;
 import assignment10.repositories.IRepository;
